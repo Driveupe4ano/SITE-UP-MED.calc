@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Site Esqueleto</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    /* Barra superior */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      background-color: #ddd;
+      padding: 10px;
+    }
+
+    nav button {
+      padding: 8px 16px;
+      border: none;
+      background: #bbb;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    nav button:hover {
+      background: #999;
+      color: white;
+    }
+
+    /* Área de busca */
+    .busca {
+      margin: 20px auto;
+      width: 50%;
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 5px 10px;
+      background: white;
+    }
+
+    .busca input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .busca .lupa {
+      font-size: 18px;
+      color: #888;
+      margin-left: 5px;
+    }    /* Título central */
+    h1 {
+      margin: 40px 0 20px;
+      font-size: 2rem;
+    }
+
+    /* Botão Voltar (canto inferior esquerdo) */
+    #btn11 {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background: #bbb;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #btn11:hover {
+      background: #999;
+      color: white;
+    }    /* Botões grandes A, B, C, D */
+    .big-actions {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 16px;
+      max-width: 900px;
+      margin: 80px auto 30px; /* 80px abaixo do título */
+      padding: 0 16px;
+    }
+    @media (max-width: 820px) {
+      .big-actions { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+    }
+    @media (max-width: 420px) {
+      .big-actions { grid-template-columns: 1fr 1fr; }
+    }
+
+    .big-btn {
+      aspect-ratio: 1 / 1; /* quadrado */
+      background: #f0f0f0;
+      border: 1px solid #d9d9d9;
+      border-radius: 12px;
+      font-size: 22px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+    }
+    .big-btn:hover { background:#eef5ff; border-color:#cfe1ff; }
+    .big-btn:active { transform: scale(0.98); }
+
+    /* Menu flutuante de Especialidades */
+    .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: none; align-items: flex-start; justify-content: center; padding-top: 90px; z-index: 1000; }
+    .menu-card { background:#fff; width: min(1000px, 92vw); max-height: 70vh; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); overflow: hidden; display:flex; flex-direction: column; }
+    .menu-header { display:flex; align-items:center; justify-content: space-between; padding:14px 16px; background:#f1f1f1; border-bottom:1px solid #e3e3e3; }
+    .menu-title { font-weight:700; font-size: 18px; }
+    .menu-close { border:none; background:#bbb; padding:6px 10px; border-radius:6px; cursor:pointer; }
+    .menu-content { padding: 12px 16px; overflow:auto; }
+    .grid-specialties { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .spec-btn { text-align:left; border:1px solid #ddd; background:#fafafa; border-radius:8px; padding:10px 12px; cursor:pointer; }
+    .spec-btn:hover { background:#e9f2ff; border-color:#bcd7ff; }
+
+    /* Menu flutuante de Diretrizes */
+  
+  
+    /* Diretrizes: layout vertical reutilizando o modal padrão */
+    .stack-vertical { display:flex; flex-direction:column; gap:10px; }
+    .guide-btn { text-align:left; border:1px solid #ddd; background:#fafafa; border-radius:8px; padding:12px 14px; cursor:pointer; }
+    .guide-btn:hover { background:#e9f2ff; border-color:#bcd7ff; }
+  
+
+    /* Calculadoras: reutiliza layout vertical do modal */
+    .calc-btn { text-align:left; border:1px solid #ddd; background:#fafafa; border-radius:8px; padding:12px 14px; cursor:pointer; }
+    .calc-btn:hover { background:#e9f2ff; border-color:#bcd7ff; }
+  
+
+    /* Medicamentos: reutiliza layout vertical do modal */
+    .med-btn { text-align:left; border:1px solid #ddd; background:#fafafa; border-radius:8px; padding:12px 14px; cursor:pointer; }
+    .med-btn:hover { background:#e9f2ff; border-color:#bcd7ff; }
+  </style>
+</head>
+<body>
+
+  <!-- Barra superior -->
+  <nav>
+    <button id="btn1">Especialidades</button>
+    <button id="btn2">Diretrizes</button>
+    <button id="btn3">Calculadoras</button>
+    <button id="btn4">Medicamentos</button>
+    <button id="btn5">Botão 5</button>
+    <button id="btn6">Botão 6</button>
+    <button id="btn7">Botão 7</button>
+    <button id="btn8">Botão 8</button>
+    <button id="btn9">Botão 9</button>
+    <button id="btn10">Botão 10</button>
+  </nav>
+
+  <!-- Espaço de busca -->
+  <div class="busca">
+    <input type="text" placeholder="Espaço de busca">
+    <span class="lupa">🔍</span>
+  </div>
+
+  <!-- Título central -->
+  <h1 id="tituloCentral">Título centralizado</h1>
+
+  <!-- Ações grandes A, B, C, D (abaixo do título) -->
+  <div class="big-actions" aria-label="Ações principais">
+    <button class="big-btn" id="btnA" aria-label="Botão A">A</button>
+    <button class="big-btn" id="btnB" aria-label="Botão B">B</button>
+    <button class="big-btn" id="btnC" aria-label="Botão C">C</button>
+    <button class="big-btn" id="btnD" aria-label="Botão D">D</button>
+  </div>
+
+
+  <!-- Botão Voltar (inferior esquerdo) -->
+  <button id="btn11">Voltar</button>
+
+  <!-- Menu flutuante: Especialidades -->
+  <div id="menuEspecialidades" class="menu-overlay" aria-hidden="true">
+    <div class="menu-card" role="dialog" aria-modal="true" aria-labelledby="tituloMenuEsp">
+      <div class="menu-header">
+        <div id="tituloMenuEsp" class="menu-title">Especialidades (clique para abrir futuramente a respectiva área)</div>
+        <button class="menu-close" id="fecharMenuEsp">Fechar</button>
+      </div>
+      <div class="menu-content">
+        <div class="grid-specialties">
+          <!-- Todas as especialidades -->
+          <button class="spec-btn" data-spec="Acupuntura">Acupuntura</button>
+          <button class="spec-btn" data-spec="Alergia e Imunologia">Alergia e Imunologia</button>
+          <button class="spec-btn" data-spec="Anestesiologia">Anestesiologia</button>
+          <button class="spec-btn" data-spec="Angiologia">Angiologia</button>
+          <button class="spec-btn" data-spec="Cancerologia">Cancerologia</button>
+          <button class="spec-btn" data-spec="Cardiologia">Cardiologia</button>
+          <button class="spec-btn" data-spec="Cirurgia Cardiovascular">Cirurgia Cardiovascular</button>
+          <button class="spec-btn" data-spec="Cirurgia da Mão">Cirurgia da Mão</button>
+          <button class="spec-btn" data-spec="Cirurgia de Cabeça e Pescoço">Cirurgia de Cabeça e Pescoço</button>
+          <button class="spec-btn" data-spec="Cirurgia do Aparelho Digestivo">Cirurgia do Aparelho Digestivo</button>
+          <button class="spec-btn" data-spec="Cirurgia Geral">Cirurgia Geral</button>
+          <button class="spec-btn" data-spec="Cirurgia Pediátrica">Cirurgia Pediátrica</button>
+          <button class="spec-btn" data-spec="Cirurgia Plástica">Cirurgia Plástica</button>
+          <button class="spec-btn" data-spec="Cirurgia Torácica">Cirurgia Torácica</button>
+          <button class="spec-btn" data-spec="Cirurgia Vascular">Cirurgia Vascular</button>
+          <button class="spec-btn" data-spec="Clínica Médica">Clínica Médica</button>
+          <button class="spec-btn" data-spec="Coloproctologia">Coloproctologia</button>
+          <button class="spec-btn" data-spec="Dermatologia">Dermatologia</button>
+          <button class="spec-btn" data-spec="Endocrinologia">Endocrinologia</button>
+          <button class="spec-btn" data-spec="Gastroenterologia">Gastroenterologia</button>
+          <button class="spec-btn" data-spec="Genética Médica">Genética Médica</button>
+          <button class="spec-btn" data-spec="Geriatria">Geriatria</button>
+          <button class="spec-btn" data-spec="Ginecologia e Obstetrícia">Ginecologia e Obstetrícia</button>
+          <button class="spec-btn" data-spec="Hematologia">Hematologia</button>
+          <button class="spec-btn" data-spec="Homeopatia">Homeopatia</button>
+          <button class="spec-btn" data-spec="Infectologia">Infectologia</button>
+          <button class="spec-btn" data-spec="Mastologia">Mastologia</button>
+          <button class="spec-btn" data-spec="Medicina de Família e Comunidade">Medicina de Família e Comunidade</button>
+          <button class="spec-btn" data-spec="Medicina do Trabalho">Medicina do Trabalho</button>
+          <button class="spec-btn" data-spec="Medicina de Tráfego">Medicina de Tráfego</button>
+          <button class="spec-btn" data-spec="Medicina Esportiva">Medicina Esportiva</button>
+          <button class="spec-btn" data-spec="Medicina Física e Reabilitação">Medicina Física e Reabilitação</button>
+          <button class="spec-btn" data-spec="Medicina Intensiva">Medicina Intensiva</button>
+          <button class="spec-btn" data-spec="Medicina Legal e Perícia Médica">Medicina Legal e Perícia Médica</button>
+          <button class="spec-btn" data-spec="Medicina Nuclear">Medicina Nuclear</button>
+          <button class="spec-btn" data-spec="Medicina Preventiva e Social">Medicina Preventiva e Social</button>
+          <button class="spec-btn" data-spec="Nefrologia">Nefrologia</button>
+          <button class="spec-btn" data-spec="Neurocirurgia">Neurocirurgia</button>
+          <button class="spec-btn" data-spec="Neurologia">Neurologia</button>
+          <button class="spec-btn" data-spec="Nutrologia">Nutrologia</button>
+          <button class="spec-btn" data-spec="Oftalmologia">Oftalmologia</button>
+          <button class="spec-btn" data-spec="Oncologia Clínica">Oncologia Clínica</button>
+          <button class="spec-btn" data-spec="Ortopedia e Traumatologia">Ortopedia e Traumatologia</button>
+          <button class="spec-btn" data-spec="Otorrinolaringologia">Otorrinolaringologia</button>
+          <button class="spec-btn" data-spec="Patologia">Patologia</button>
+          <button class="spec-btn" data-spec="Patologia Clínica/Medicina Laboratorial">Patologia Clínica/Medicina Laboratorial</button>
+          <button class="spec-btn" data-spec="Pediatria">Pediatria</button>
+          <button class="spec-btn" data-spec="Pneumologia">Pneumologia</button>
+          <button class="spec-btn" data-spec="Psiquiatria">Psiquiatria</button>
+          <button class="spec-btn" data-spec="Radiologia e Diagnóstico por Imagem">Radiologia e Diagnóstico por Imagem</button>
+          <button class="spec-btn" data-spec="Radioterapia">Radioterapia</button>
+          <button class="spec-btn" data-spec="Reumatologia">Reumatologia</button>
+          <button class="spec-btn" data-spec="Urologia">Urologia</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!-- Janela flutuante: Diretrizes -->
+  <div id="menuDiretrizes" class="menu-overlay" aria-hidden="true">
+    <div class="menu-card" role="dialog" aria-modal="true" aria-labelledby="tituloMenuDir">
+      <div class="menu-header">
+        <div id="tituloMenuDir" class="menu-title">Diretrizes</div>
+        <button class="menu-close" id="fecharDiretrizes">Fechar</button>
+      </div>
+      <div class="menu-content">
+        <div class="stack-vertical">
+          <button class="guide-btn" data-dir="Diretriz 1">Diretriz 1</button>
+          <button class="guide-btn" data-dir="Diretriz 2">Diretriz 2</button>
+          <button class="guide-btn" data-dir="Diretriz 3">Diretriz 3</button>
+          <button class="guide-btn" data-dir="Diretriz 4">Diretriz 4</button>
+          <button class="guide-btn" data-dir="Diretriz 5">Diretriz 5</button>
+          <button class="guide-btn" data-dir="Diretriz 6">Diretriz 6</button>
+          <button class="guide-btn" data-dir="Diretriz 7">Diretriz 7</button>
+          <button class="guide-btn" data-dir="Diretriz 8">Diretriz 8</button>
+          <button class="guide-btn" data-dir="Diretriz 9">Diretriz 9</button>
+          <button class="guide-btn" data-dir="Diretriz 10">Diretriz 10</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Janela flutuante: Calculadoras -->
+  <div id="menuCalculadoras" class="menu-overlay" aria-hidden="true">
+    <div class="menu-card" role="dialog" aria-modal="true" aria-labelledby="tituloMenuCalc">
+      <div class="menu-header">
+        <div id="tituloMenuCalc" class="menu-title">Calculadoras</div>
+        <button class="menu-close" id="fecharCalculadoras">Fechar</button>
+      </div>
+      <div class="menu-content">
+        <div class="stack-vertical">
+          <button class="calc-btn" data-calc="Calculadora 1">Calculadora 1</button>
+          <button class="calc-btn" data-calc="Calculadora 2">Calculadora 2</button>
+          <button class="calc-btn" data-calc="Calculadora 3">Calculadora 3</button>
+          <button class="calc-btn" data-calc="Calculadora 4">Calculadora 4</button>
+          <button class="calc-btn" data-calc="Calculadora 5">Calculadora 5</button>
+          <button class="calc-btn" data-calc="Calculadora 6">Calculadora 6</button>
+          <button class="calc-btn" data-calc="Calculadora 7">Calculadora 7</button>
+          <button class="calc-btn" data-calc="Calculadora 8">Calculadora 8</button>
+          <button class="calc-btn" data-calc="Calculadora 9">Calculadora 9</button>
+          <button class="calc-btn" data-calc="Calculadora 10">Calculadora 10</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Janela flutuante: Medicamentos -->
+  <div id="menuMedicamentos" class="menu-overlay" aria-hidden="true">
+    <div class="menu-card" role="dialog" aria-modal="true" aria-labelledby="tituloMenuMed">
+      <div class="menu-header">
+        <div id="tituloMenuMed" class="menu-title">Medicamentos</div>
+        <button class="menu-close" id="fecharMedicamentos">Fechar</button>
+      </div>
+      <div class="menu-content">
+        <div class="stack-vertical">
+          <button class="med-btn" data-med="Medicamento 1">Medicamento 1</button>
+          <button class="med-btn" data-med="Medicamento 2">Medicamento 2</button>
+          <button class="med-btn" data-med="Medicamento 3">Medicamento 3</button>
+          <button class="med-btn" data-med="Medicamento 4">Medicamento 4</button>
+          <button class="med-btn" data-med="Medicamento 5">Medicamento 5</button>
+          <button class="med-btn" data-med="Medicamento 6">Medicamento 6</button>
+          <button class="med-btn" data-med="Medicamento 7">Medicamento 7</button>
+          <button class="med-btn" data-med="Medicamento 8">Medicamento 8</button>
+          <button class="med-btn" data-med="Medicamento 9">Medicamento 9</button>
+          <button class="med-btn" data-med="Medicamento 10">Medicamento 10</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Abrir/fechar menu de Especialidades
+    const btnEspecialidades = document.getElementById('btn1');
+    const overlayEsp = document.getElementById('menuEspecialidades');
+    const fecharEsp = document.getElementById('fecharMenuEsp');
+
+    if(btnEspecialidades && overlayEsp && fecharEsp){
+      btnEspecialidades.addEventListener('click', () => {
+        overlayEsp.style.display = 'flex';
+        overlayEsp.setAttribute('aria-hidden','false');
+      });
+
+      fecharEsp.addEventListener('click', () => {
+        overlayEsp.style.display = 'none';
+        overlayEsp.setAttribute('aria-hidden','true');
+      });
+
+      overlayEsp.addEventListener('click', (e) => {
+        if (e.target === overlayEsp) {
+          overlayEsp.style.display = 'none';
+          overlayEsp.setAttribute('aria-hidden','true');
+        }
+      });
+
+      document.querySelectorAll('.spec-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          alert('Abrir futuramente a página/aba de: ' + btn.dataset.spec);
+        });
+      });
+    }
+
+    // Abrir/fechar janela de Diretrizes
+    const btnDiretrizes = document.getElementById('btn2');
+    const overlayDir = document.getElementById('menuDiretrizes');
+    const fecharDir = document.getElementById('fecharDiretrizes');
+
+    if (btnDiretrizes && overlayDir && fecharDir) {
+      btnDiretrizes.addEventListener('click', () => {
+        overlayDir.style.display = 'flex';
+        overlayDir.setAttribute('aria-hidden','false');
+      });
+
+      fecharDir.addEventListener('click', () => {
+        overlayDir.style.display = 'none';
+        overlayDir.setAttribute('aria-hidden','true');
+      });
+
+      overlayDir.addEventListener('click', (e) => {
+        if (e.target === overlayDir) {
+          overlayDir.style.display = 'none';
+          overlayDir.setAttribute('aria-hidden','true');
+        }
+      });
+
+      document.querySelectorAll('.guide-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        alert('Abriremos futuramente: ' + b.dataset.dir);
+      });
+    });
+  }
+
+  // Abrir/fechar janela de Calculadoras
+  const btnCalculadoras = document.getElementById('btn3');
+  const overlayCalc = document.getElementById('menuCalculadoras');
+  const fecharCalc = document.getElementById('fecharCalculadoras');
+
+  if (btnCalculadoras && overlayCalc && fecharCalc) {
+    btnCalculadoras.addEventListener('click', () => {
+      overlayCalc.style.display = 'flex';
+      overlayCalc.setAttribute('aria-hidden','false');
+    });
+
+    fecharCalc.addEventListener('click', () => {
+      overlayCalc.style.display = 'none';
+      overlayCalc.setAttribute('aria-hidden','true');
+    });
+
+    overlayCalc.addEventListener('click', (e) => {
+      if (e.target === overlayCalc) {
+        overlayCalc.style.display = 'none';
+        overlayCalc.setAttribute('aria-hidden','true');
+      }
+    });
+
+    document.querySelectorAll('.calc-btn').forEach(c => {
+      c.addEventListener('click', () => {
+        alert('Abriremos futuramente: ' + c.dataset.calc);
+      });
+    });
+  }
+
+  // Abrir/fechar janela de Medicamentos
+  const btnMedicamentos = document.getElementById('btn4');
+  const overlayMed = document.getElementById('menuMedicamentos');
+  const fecharMed = document.getElementById('fecharMedicamentos');
+
+  if (btnMedicamentos && overlayMed && fecharMed) {
+    btnMedicamentos.addEventListener('click', () => {
+      overlayMed.style.display = 'flex';
+      overlayMed.setAttribute('aria-hidden','false');
+    });
+
+    fecharMed.addEventListener('click', () => {
+      overlayMed.style.display = 'none';
+      overlayMed.setAttribute('aria-hidden','true');
+    });
+
+    overlayMed.addEventListener('click', (e) => {
+      if (e.target === overlayMed) {
+        overlayMed.style.display = 'none';
+        overlayMed.setAttribute('aria-hidden','true');
+      }
+    });
+
+    document.querySelectorAll('.med-btn').forEach(m => {
+      m.addEventListener('click', () => {
+        alert('Abriremos futuramente: ' + m.dataset.med);
+      });
+    });
+  }
+
+  // Função de voltar
+    const btnVoltar = document.getElementById('btn11');
+    btnVoltar.addEventListener('click', () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = '/';
+      }
+    });
+  </script>
+
+</body>
+</html>
